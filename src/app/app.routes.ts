@@ -28,20 +28,20 @@ export const routes: Routes = [
       {
         path: 'contacts',
         loadComponent: () =>
-          import('./features/contacts/components/contacts.component').then(
-            (c) => c.ContactsComponent
+          import('./features/contacts/components/contacts-list/contacts-list.component').then(
+            (c) => c.ContactsListComponent
           ),
       },
       {
         path: 'deals',
         loadComponent: () =>
-          import('./features/deals/components/deals.component').then((c) => c.DealsComponent),
+          import('./features/deals/components/deals-list/deals-list.component').then((c) => c.DealsListComponent),
       },
       {
         path: 'meetings',
         loadComponent: () =>
-          import('./features/meetings/components/meetings.component').then(
-            (c) => c.MeetingsComponent
+          import('./features/meetings/components/meetings-list/meetings-list.component').then(
+            (c) => c.MeetingsListComponent
           ),
       },
     ],

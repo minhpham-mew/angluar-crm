@@ -1,0 +1,12 @@
+<div class="max-w-md">
+  <span class="p-input-icon-left w-full">
+    <i class="pi pi-search"></i>
+    <input 
+      pInputText 
+      type="text" 
+      placeholder="Search meetings..."
+      [value]="searchTerm()"
+      (input)="onSearchChange($event)"
+      class="w-full" />
+  </span>
+</div>
