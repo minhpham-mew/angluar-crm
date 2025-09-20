@@ -1,0 +1,279 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Meetings</h1>
+      <p class="mt-1 text-sm text-gray-600">
+        Schedule and manage your meetings.
+      </p>
+    </div>
+    <p-button 
+      label="Schedule Meeting" 
+      icon="pi pi-plus" 
+      severity="primary"
+      (onClick)="openAddMeetingDialog()">
+    </p-button>
+  </div>
+
+  <!-- Search -->
+  <div class="max-w-md">
+    <span class="p-input-icon-left w-full">
+      <i class="pi pi-search"></i>
+      <input 
+        pInputText 
+        type="text" 
+        placeholder="Search meetings..."
+        [value]="searchTerm$ | async"
+        (input)="onSearchChange($event)"
+        class="w-full" />
+    </span>
+  </div>
+
+  <!-- Today's Meetings Summary -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Today's Schedule</h3>
+    @if (todaysMeetings$ | async; as todaysMeetings) {
+      @if (todaysMeetings.length > 0) {
+        <div class="space-y-3">
+          @for (meeting of todaysMeetings; track meeting.$id) {
+            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <div class="flex-shrink-0">
+                  <i class="pi pi-calendar text-blue-500"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-900">{{ meeting.title }}</p>
+                  <p class="text-sm text-gray-500">
+                    {{ meeting.startDateTime | date:'shortTime' }} - {{ meeting.endDateTime | date:'shortTime' }}
+                    @if (meeting.location) {
+                      • {{ meeting.location }}
+                    }
+                  </p>
+                </div>
+              </div>
+              <p-tag value="Today" severity="info"></p-tag>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="text-gray-500">No meetings scheduled for today.</p>
+      }
+    }
+  </div>
+
+  <!-- Loading State -->
+  @if (loading$ | async) {
+    <div class="flex justify-center py-12">
+      <p-progressSpinner strokeWidth="4" animationDuration="1s"></p-progressSpinner>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error$ | async; as error) {
+    <p-message severity="error" [text]="error"></p-message>
+  }
+
+  <!-- Meetings Table -->
+  @if (meetings$ | async; as meetings) {
+    @if (meetings.length > 0) {
+      <p-table 
+        [value]="meetings" 
+        [paginator]="true" 
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        styleClass="p-datatable-gridlines">
+        
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Meeting</th>
+            <th>Date & Time</th>
+            <th>Duration</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-meeting>
+          <tr>
+            <td>
+              <div>
+                <div class="font-medium text-gray-900">{{ meeting.title }}</div>
+                @if (meeting.description) {
+                  <div class="text-sm text-gray-500">{{ meeting.description }}</div>
+                }
+              </div>
+            </td>
+            <td>
+              <div>
+                <div class="text-sm font-medium text-gray-900">
+                  {{ meeting.startDateTime | date:'shortDate' }}
+                </div>
+                <div class="text-sm text-gray-500">
+                  {{ meeting.startDateTime | date:'shortTime' }} - {{ meeting.endDateTime | date:'shortTime' }}
+                </div>
+              </div>
+            </td>
+            <td>
+              <p-tag 
+                [value]="getMeetingDuration(meeting.startDateTime, meeting.endDateTime)" 
+                severity="info">
+              </p-tag>
+            </td>
+            <td>
+              @if (meeting.location) {
+                <span class="text-sm text-gray-900">{{ meeting.location }}</span>
+              } @else {
+                <span class="text-gray-400">-</span>
+              }
+            </td>
+            <td>
+              <div class="flex space-x-2">
+                <p-button 
+                  icon="pi pi-pencil" 
+                  severity="secondary"
+                  size="small"
+                  [text]="true"
+                  (onClick)="editMeeting(meeting)"
+                  pTooltip="Edit Meeting">
+                </p-button>
+                <p-button 
+                  icon="pi pi-trash" 
+                  severity="danger"
+                  size="small"
+                  [text]="true"
+                  (onClick)="deleteMeeting(meeting)"
+                  pTooltip="Delete Meeting">
+                </p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center py-12">
+              <div class="flex flex-col items-center">
+                <i class="pi pi-calendar text-4xl text-gray-400 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No meetings found</h3>
+                <p class="text-sm text-gray-500 mb-4">Get started by scheduling a new meeting.</p>
+                <p-button 
+                  label="Schedule Meeting" 
+                  icon="pi pi-plus" 
+                  severity="primary"
+                  (onClick)="openAddMeetingDialog()">
+                </p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <!-- Empty State -->
+      <div class="text-center py-12">
+        <i class="pi pi-calendar text-6xl text-gray-400 mb-4"></i>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No meetings scheduled</h3>
+        <p class="text-sm text-gray-500 mb-4">Get started by scheduling your first meeting.</p>
+        <p-button 
+          label="Schedule Meeting" 
+          icon="pi pi-plus" 
+          severity="primary"
+          (onClick)="openAddMeetingDialog()">
+        </p-button>
+      </div>
+    }
+  }
+</div>
+
+<!-- Add/Edit Meeting Dialog -->
+<p-dialog 
+  [(visible)]="displayMeetingDialog" 
+  [header]="selectedMeeting ? 'Edit Meeting' : 'Schedule New Meeting'"
+  [modal]="true" 
+  [style]="{width: '500px'}"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <form [formGroup]="meetingForm" (ngSubmit)="saveMeeting()">
+    <div class="field">
+      <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+      <input 
+        pInputText 
+        id="title" 
+        formControlName="title"
+        class="w-full"
+        [class.ng-invalid]="meetingForm.get('title')?.invalid && meetingForm.get('title')?.touched" />
+      @if (meetingForm.get('title')?.invalid && meetingForm.get('title')?.touched) {
+        <small class="p-error">Title is required</small>
+      }
+    </div>
+    
+    <div class="field">
+      <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+      <textarea 
+        id="description" 
+        formControlName="description"
+        rows="3"
+        class="p-inputtext p-component w-full">
+      </textarea>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <div class="field">
+        <label for="startDateTime" class="block text-sm font-medium text-gray-700 mb-2">Start Date & Time *</label>
+        <input
+          type="datetime-local"
+          id="startDateTime"
+          formControlName="startDateTime"
+          class="p-inputtext p-component w-full">
+        @if (meetingForm.get('startDateTime')?.invalid && meetingForm.get('startDateTime')?.touched) {
+          <small class="p-error">Start date and time is required</small>
+        }
+      </div>
+      
+      <div class="field">
+        <label for="endDateTime" class="block text-sm font-medium text-gray-700 mb-2">End Date & Time *</label>
+        <input
+          type="datetime-local"
+          id="endDateTime"
+          formControlName="endDateTime"
+          class="p-inputtext p-component w-full">
+        @if (meetingForm.get('endDateTime')?.invalid && meetingForm.get('endDateTime')?.touched) {
+          <small class="p-error">End date and time is required</small>
+        }
+      </div>
+    </div>
+    
+    <div class="field">
+      <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+      <input 
+        pInputText 
+        id="location" 
+        formControlName="location"
+        placeholder="e.g., Conference Room A, Zoom, etc."
+        class="w-full" />
+    </div>
+  </form>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancel" 
+      icon="pi pi-times" 
+      severity="secondary"
+      [text]="true"
+      (onClick)="hideMeetingDialog()">
+    </p-button>
+    <p-button 
+      [label]="selectedMeeting ? 'Update' : 'Schedule'" 
+      icon="pi pi-check" 
+      severity="primary"
+      (onClick)="saveMeeting()"
+      [disabled]="meetingForm.invalid">
+    </p-button>
+  </ng-template>
+</p-dialog>
+
+<!-- Delete Confirmation Dialog -->
+<p-confirmDialog></p-confirmDialog>

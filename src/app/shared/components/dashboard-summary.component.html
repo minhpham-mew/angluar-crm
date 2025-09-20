@@ -1,0 +1,146 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div>
+    <h1 class="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+    <p class="mt-1 text-sm text-gray-600">
+      Welcome to your CRM dashboard. Here's what's happening with your business.
+    </p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Total Contacts -->
+    <p-card styleClass="h-full">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <i class="pi pi-users text-2xl text-blue-500"></i>
+        </div>
+        <div class="ml-5 w-0 flex-1">
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 truncate">Total Contacts</dt>
+            <dd class="text-lg font-medium text-gray-900">{{ totalContacts$ | async }}</dd>
+          </dl>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Active Deals -->
+    <p-card styleClass="h-full">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <i class="pi pi-briefcase text-2xl text-green-500"></i>
+        </div>
+        <div class="ml-5 w-0 flex-1">
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 truncate">Active Deals</dt>
+            <dd class="text-lg font-medium text-gray-900">{{ (allDeals$ | async)?.length || 0 }}</dd>
+          </dl>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Upcoming Meetings -->
+    <p-card styleClass="h-full">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <i class="pi pi-calendar text-2xl text-orange-500"></i>
+        </div>
+        <div class="ml-5 w-0 flex-1">
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 truncate">Upcoming Meetings</dt>
+            <dd class="text-lg font-medium text-gray-900">{{ (upcomingMeetings$ | async)?.length || 0 }}</dd>
+          </dl>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Revenue Pipeline -->
+    <p-card styleClass="h-full">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <i class="pi pi-dollar text-2xl text-purple-500"></i>
+        </div>
+        <div class="ml-5 w-0 flex-1">
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 truncate">Pipeline Value</dt>
+            <dd class="text-lg font-medium text-gray-900">${{ (pipelineValue$ | async) | number:'1.0-0' }}</dd>
+          </dl>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <!-- Recent Contacts -->
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex items-center">
+          <i class="pi pi-users mr-2"></i>
+          <span class="font-medium">Recent Contacts</span>
+        </div>
+      </ng-template>
+      
+      @if (recentContacts$ | async; as contacts) {
+        @if (contacts.length > 0) {
+          <div class="space-y-3">
+            @for (contact of contacts; track contact.$id) {
+              <div class="flex items-center space-x-3">
+                <p-avatar 
+                  [label]="getContactInitials(contact.firstName, contact.lastName)"
+                  shape="circle"
+                  size="normal">
+                </p-avatar>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900 truncate">
+                    {{ contact.firstName }} {{ contact.lastName }}
+                  </p>
+                  <p class="text-sm text-gray-500 truncate">{{ contact.email }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="text-center py-6">
+            <i class="pi pi-users text-4xl text-gray-400 mb-4"></i>
+            <h3 class="text-sm font-medium text-gray-900">No contacts</h3>
+            <p class="text-sm text-gray-500">Get started by creating a new contact.</p>
+          </div>
+        }
+      }
+    </p-card>
+
+    <!-- Quick Actions -->
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex items-center">
+          <i class="pi pi-bolt mr-2"></i>
+          <span class="font-medium">Quick Actions</span>
+        </div>
+      </ng-template>
+      
+      <div class="space-y-3">
+        <p-button 
+          label="Add New Contact"
+          icon="pi pi-plus"
+          routerLink="/dashboard/contacts"
+          styleClass="w-full">
+        </p-button>
+        <p-button 
+          label="Create New Deal"
+          icon="pi pi-briefcase"
+          severity="secondary"
+          routerLink="/dashboard/deals"
+          styleClass="w-full">
+        </p-button>
+        <p-button 
+          label="Schedule Meeting"
+          icon="pi pi-calendar"
+          severity="secondary"
+          routerLink="/dashboard/meetings"
+          styleClass="w-full">
+        </p-button>
+      </div>
+    </p-card>
+  </div>
+</div>
