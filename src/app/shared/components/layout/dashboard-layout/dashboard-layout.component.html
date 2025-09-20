@@ -1,0 +1,26 @@
+<div class="min-h-screen bg-gray-100">
+  <!-- Navigation -->
+  <app-navbar
+    [user]="user$ | async"
+    (logout)="logout()"
+    (showSessionManager)="showSessionManager()">
+  </app-navbar>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <!-- Session Manager Dialog -->
+  <app-session-manager-dialog
+    [visible]="sessionManagerVisible"
+    [currentSession]="currentSession"
+    [allSessions]="allSessions"
+    (dialogHide)="hideSessionManager()"
+    (refreshSession)="refreshSession()"
+    (deleteSession)="deleteSession($event)"
+    (deleteAllOtherSessions)="deleteAllOtherSessions()">
+  </app-session-manager-dialog>
+</div>

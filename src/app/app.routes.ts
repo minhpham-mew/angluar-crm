@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./shared/components/dashboard-layout.component').then(
+      import('./shared/components/layout/dashboard-layout/dashboard-layout.component').then(
         (c) => c.DashboardLayoutComponent
       ),
     canActivate: [authGuard],
@@ -21,8 +21,8 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./shared/components/dashboard-summary.component').then(
-            (c) => c.DashboardSummaryComponent
+          import('./shared/components/dashboard/dashboard-overview/dashboard-overview.component').then(
+            (c) => c.DashboardOverviewComponent
           ),
       },
       {

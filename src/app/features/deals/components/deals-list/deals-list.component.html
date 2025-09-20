@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="flex flex-col gap-y-6">
   <!-- Header -->
   <div class="flex justify-between items-center">
     <div>
@@ -7,43 +7,41 @@
         Track your sales pipeline and manage deal opportunities.
       </p>
     </div>
-    <p-button 
-      label="Add Deal" 
-      icon="pi pi-plus" 
-      severity="primary"
-      (onClick)="openAddDealDialog()">
+    <p-button label="Add Deal" icon="pi pi-plus" severity="primary" (onClick)="openAddDealDialog()">
     </p-button>
   </div>
 
   <!-- Pipeline Value Summary -->
   @if (pipelineValue$ | async; as pipelineValue) {
-    <div class="bg-white p-6 rounded-lg shadow">
-      <div class="flex items-center">
-        <div class="flex-shrink-0">
-          <i class="pi pi-dollar text-2xl text-green-500"></i>
-        </div>
-        <div class="ml-4">
-          <h3 class="text-lg font-medium text-gray-900">Total Pipeline Value</h3>
-          <p class="text-3xl font-bold text-green-600">${{ pipelineValue | number:'1.2-2' }}</p>
-        </div>
+  <div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex items-center">
+      <div class="flex-shrink-0">
+        <i class="pi pi-dollar text-2xl text-green-500"></i>
+      </div>
+      <div class="ml-4">
+        <h3 class="text-lg font-medium text-gray-900">Total Pipeline Value</h3>
+        <p class="text-3xl font-bold text-green-600">${{ pipelineValue | number : '1.2-2' }}</p>
       </div>
     </div>
+  </div>
   }
 
   <!-- Search -->
-  <app-deal-search 
+  <app-deal-search
     [searchTerm]="(searchTerm$ | async) || ''"
-    (searchChange)="onSearchChange($event)">
+    (searchChange)="onSearchChange($event)"
+  >
   </app-deal-search>
 
   <!-- Deals Table -->
   <app-deal-table
     [deals]="(deals$ | async) || []"
     [loading]="(loading$ | async) || false"
-    [error]="(error$ | async)"
+    [error]="error$ | async"
     (addDeal)="openAddDealDialog()"
     (editDeal)="openEditDealDialog($event)"
-    (deleteDeal)="confirmDeleteDeal($event)">
+    (deleteDeal)="confirmDeleteDeal($event)"
+  >
   </app-deal-table>
 
   <!-- Deal Form Dialog -->
@@ -51,7 +49,8 @@
     [visible]="displayDealDialog"
     [selectedDeal]="selectedDeal()"
     (dialogHide)="closeDealDialog()"
-    (dealSave)="saveDeal($event)">
+    (dealSave)="saveDeal($event)"
+  >
   </app-deal-form>
 </div>
 

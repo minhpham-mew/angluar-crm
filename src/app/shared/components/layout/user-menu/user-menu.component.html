@@ -1,0 +1,33 @@
+<div class="flex items-center">
+  @if (user()) {
+  <div class="flex items-center space-x-4">
+    <p-avatar [label]="getUserInitials(user()!.name)" shape="circle" size="normal"> </p-avatar>
+    <div class="hidden md:block">
+      <div class="text-sm font-medium text-gray-900">{{ user()!.name }}</div>
+      <div class="text-xs text-gray-500">{{ user()!.email }}</div>
+    </div>
+    <div class="flex items-center space-x-2">
+      <p-button
+        icon="pi pi-cog"
+        severity="secondary"
+        [text]="true"
+        size="small"
+        (onClick)="showSessionManager.emit()"
+        pTooltip="Session Management"
+        tooltipPosition="bottom"
+      >
+      </p-button>
+      <p-button
+        icon="pi pi-sign-out"
+        severity="secondary"
+        [text]="true"
+        size="small"
+        (onClick)="logout.emit()"
+        pTooltip="Logout"
+        tooltipPosition="bottom"
+      >
+      </p-button>
+    </div>
+  </div>
+  }
+</div>

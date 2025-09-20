@@ -1,0 +1,58 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex items-center justify-between w-full">
+      <div class="flex items-center">
+        <i class="pi pi-list mr-2"></i>
+        <span class="font-medium">All Active Sessions</span>
+      </div>
+      <p-button 
+        label="End All Other Sessions" 
+        icon="pi pi-times-circle" 
+        severity="danger"
+        size="small"
+        [text]="true"
+        (onClick)="deleteAllOtherSessions.emit()"
+        pTooltip="End all sessions except current">
+      </p-button>
+    </div>
+  </ng-template>
+  
+  @if (allSessions()?.sessions && allSessions()!.sessions.length > 0) {
+    <div class="space-y-3">
+      @for (session of allSessions()!.sessions; track session.$id) {
+        <div class="flex items-center justify-between p-3 border rounded-lg" 
+             [class.bg-blue-50]="session.current"
+             [class.border-blue-200]="session.current">
+          <div class="flex-1">
+            <div class="flex items-center space-x-2">
+              <i class="pi pi-desktop text-gray-500"></i>
+              <span class="text-sm font-medium">
+                {{ session.clientName || 'Unknown Device' }}
+              </span>
+              @if (session.current) {
+                <p-tag value="Current" severity="info" size="small"></p-tag>
+              }
+            </div>
+            <div class="mt-1 text-xs text-gray-500">
+              IP: {{ session.ip || 'Unknown' }} • 
+              Created: {{ session.$createdAt | date:'short' }}
+            </div>
+          </div>
+          
+          @if (!session.current) {
+            <p-button 
+              icon="pi pi-times" 
+              severity="danger"
+              size="small"
+              [text]="true"
+              (onClick)="deleteSession.emit(session.$id)"
+              pTooltip="End this session">
+            </p-button>
+          }
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="text-sm text-gray-500 text-center py-4">Loading sessions...</p>
+  }
+</p-card>

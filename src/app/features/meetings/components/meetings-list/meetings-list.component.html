@@ -1,34 +1,35 @@
-<div class="space-y-6">
+<div class="flex flex-col gap-y-6">
   <!-- Header -->
   <div class="flex justify-between items-center">
     <div>
       <h1 class="text-2xl font-bold text-gray-900">Meetings</h1>
-      <p class="mt-1 text-sm text-gray-600">
-        Schedule and manage your meetings and appointments.
-      </p>
+      <p class="mt-1 text-sm text-gray-600">Schedule and manage your meetings and appointments.</p>
     </div>
-    <p-button 
-      label="Schedule Meeting" 
-      icon="pi pi-plus" 
+    <p-button
+      label="Schedule Meeting"
+      icon="pi pi-plus"
       severity="primary"
-      (onClick)="openAddMeetingDialog()">
+      (onClick)="openAddMeetingDialog()"
+    >
     </p-button>
   </div>
 
   <!-- Search -->
-  <app-meeting-search 
+  <app-meeting-search
     [searchTerm]="(searchTerm$ | async) || ''"
-    (searchChange)="onSearchChange($event)">
+    (searchChange)="onSearchChange($event)"
+  >
   </app-meeting-search>
 
   <!-- Meetings Table -->
   <app-meeting-table
     [meetings]="(meetings$ | async) || []"
     [loading]="(loading$ | async) || false"
-    [error]="(error$ | async)"
+    [error]="error$ | async"
     (addMeeting)="openAddMeetingDialog()"
     (editMeeting)="openEditMeetingDialog($event)"
-    (deleteMeeting)="confirmDeleteMeeting($event)">
+    (deleteMeeting)="confirmDeleteMeeting($event)"
+  >
   </app-meeting-table>
 
   <!-- Meeting Form Dialog -->
@@ -36,7 +37,8 @@
     [visible]="displayMeetingDialog"
     [selectedMeeting]="selectedMeeting()"
     (dialogHide)="closeMeetingDialog()"
-    (meetingSave)="saveMeeting($event)">
+    (meetingSave)="saveMeeting($event)"
+  >
   </app-meeting-form>
 </div>
 

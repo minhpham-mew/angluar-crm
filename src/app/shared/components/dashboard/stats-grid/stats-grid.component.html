@@ -1,0 +1,61 @@
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  <!-- Total Contacts -->
+  <p-card styleClass="h-full">
+    <div class="flex items-center p-2">
+      <div class="flex-shrink-0">
+        <i class="pi pi-users text-2xl text-blue-500"></i>
+      </div>
+      <div class="ml-5 w-0 flex-1">
+        <dl>
+          <dt class="text-sm font-medium text-gray-500 truncate">Total Contacts</dt>
+          <dd class="text-lg font-medium text-gray-900">{{ totalContacts() }}</dd>
+        </dl>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Active Deals -->
+  <p-card styleClass="h-full">
+    <div class="flex items-center p-2">
+      <div class="flex-shrink-0">
+        <i class="pi pi-briefcase text-2xl text-green-500"></i>
+      </div>
+      <div class="ml-5 w-0 flex-1">
+        <dl>
+          <dt class="text-sm font-medium text-gray-500 truncate">Active Deals</dt>
+          <dd class="text-lg font-medium text-gray-900">{{ totalDeals() }}</dd>
+        </dl>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Upcoming Meetings -->
+  <p-card styleClass="h-full">
+    <div class="flex items-center p-2">
+      <div class="flex-shrink-0">
+        <i class="pi pi-calendar text-2xl text-orange-500"></i>
+      </div>
+      <div class="ml-5 w-0 flex-1">
+        <dl>
+          <dt class="text-sm font-medium text-gray-500 truncate">Upcoming Meetings</dt>
+          <dd class="text-lg font-medium text-gray-900">{{ upcomingMeetings() }}</dd>
+        </dl>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Pipeline Value -->
+  <p-card styleClass="h-full">
+    <div class="flex items-center p-2">
+      <div class="flex-shrink-0">
+        <i class="pi pi-dollar text-2xl text-purple-500"></i>
+      </div>
+      <div class="ml-5 w-0 flex-1">
+        <dl>
+          <dt class="text-sm font-medium text-gray-500 truncate">Pipeline Value</dt>
+          <dd class="text-lg font-medium text-gray-900">${{ pipelineValue() | number:'1.2-2' }}</dd>
+        </dl>
+      </div>
+    </div>
+  </p-card>
+</div>

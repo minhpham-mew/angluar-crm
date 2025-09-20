@@ -1,0 +1,41 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex items-center">
+      <i class="pi pi-desktop mr-2"></i>
+      <span class="font-medium">Current Session</span>
+    </div>
+  </ng-template>
+  
+  @if (currentSession()) {
+    <div class="space-y-2">
+      <div class="flex justify-between">
+        <span class="text-sm text-gray-600">Device:</span>
+        <span class="text-sm font-medium">{{ currentSession()!.clientName || 'Unknown Device' }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-sm text-gray-600">IP Address:</span>
+        <span class="text-sm font-medium">{{ currentSession()!.ip || 'Unknown' }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-sm text-gray-600">Created:</span>
+        <span class="text-sm font-medium">{{ currentSession()!.$createdAt | date:'medium' }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-sm text-gray-600">Expires:</span>
+        <span class="text-sm font-medium">{{ currentSession()!.expire | date:'medium' }}</span>
+      </div>
+    </div>
+    
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Refresh Session" 
+        icon="pi pi-refresh" 
+        severity="secondary"
+        size="small"
+        (onClick)="refreshSession.emit()">
+      </p-button>
+    </ng-template>
+  } @else {
+    <p class="text-sm text-gray-500">Loading session information...</p>
+  }
+</p-card>

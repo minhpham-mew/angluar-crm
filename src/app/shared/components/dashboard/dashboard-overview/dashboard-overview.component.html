@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-y-6">
+  <!-- Header -->
+  <app-dashboard-header></app-dashboard-header>
+
+  <!-- Stats Grid -->
+  <app-stats-grid
+    [totalContacts]="(totalContacts$ | async) || 0"
+    [totalDeals]="(allDeals$ | async)?.length || 0"
+    [upcomingMeetings]="(upcomingMeetings$ | async)?.length || 0"
+    [pipelineValue]="(pipelineValue$ | async) || 0"
+  >
+  </app-stats-grid>
+
+  <!-- Recent Activity -->
+  <app-recent-activity
+    [recentContacts]="(recentContacts$ | async) || []"
+    [upcomingMeetingsList]="(upcomingMeetings$ | async) || []"
+  >
+  </app-recent-activity>
+</div>

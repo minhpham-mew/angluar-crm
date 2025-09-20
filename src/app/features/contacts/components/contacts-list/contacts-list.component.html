@@ -1,34 +1,35 @@
-<div class="space-y-6">
+<div class="flex flex-col gap-y-6">
   <!-- Header -->
   <div class="flex justify-between items-center">
     <div>
       <h1 class="text-2xl font-bold text-gray-900">Contacts</h1>
-      <p class="mt-1 text-sm text-gray-600">
-        Manage your customer contacts and their information.
-      </p>
+      <p class="mt-1 text-sm text-gray-600">Manage your customer contacts and their information.</p>
     </div>
-    <p-button 
-      label="Add Contact" 
-      icon="pi pi-plus" 
+    <p-button
+      label="Add Contact"
+      icon="pi pi-plus"
       severity="primary"
-      (onClick)="openAddContactDialog()">
+      (onClick)="openAddContactDialog()"
+    >
     </p-button>
   </div>
 
   <!-- Search -->
-  <app-contact-search 
+  <app-contact-search
     [searchTerm]="(searchTerm$ | async) || ''"
-    (searchChange)="onSearchChange($event)">
+    (searchChange)="onSearchChange($event)"
+  >
   </app-contact-search>
 
   <!-- Contacts Table -->
   <app-contact-table
     [contacts]="(contacts$ | async) || []"
     [loading]="(loading$ | async) || false"
-    [error]="(error$ | async)"
+    [error]="error$ | async"
     (addContact)="openAddContactDialog()"
     (editContact)="openEditContactDialog($event)"
-    (deleteContact)="confirmDeleteContact($event)">
+    (deleteContact)="confirmDeleteContact($event)"
+  >
   </app-contact-table>
 
   <!-- Contact Form Dialog -->
@@ -36,7 +37,8 @@
     [visible]="displayContactDialog"
     [selectedContact]="selectedContact()"
     (dialogHide)="closeContactDialog()"
-    (contactSave)="saveContact($event)">
+    (contactSave)="saveContact($event)"
+  >
   </app-contact-form>
 </div>
 

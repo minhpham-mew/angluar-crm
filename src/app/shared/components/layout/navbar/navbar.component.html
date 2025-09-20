@@ -1,0 +1,21 @@
+<nav class="bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center">
+        <div class="flex-shrink-0 flex items-center">
+          <h1 class="text-xl font-bold text-gray-900">
+            <i class="pi pi-chart-line mr-2"></i>
+            CRM Dashboard
+          </h1>
+        </div>
+        <app-nav-menu></app-nav-menu>
+      </div>
+      <app-user-menu
+        [user]="user()"
+        (logout)="logout.emit()"
+        (showSessionManager)="showSessionManager.emit()"
+      >
+      </app-user-menu>
+    </div>
+  </div>
+</nav>

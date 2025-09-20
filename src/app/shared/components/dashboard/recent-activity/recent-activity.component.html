@@ -1,0 +1,80 @@
+<div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+  <!-- Recent Contacts -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="p-[20px] pb-0 flex items-center justify-between">
+        <h3 class="text-lg font-medium text-gray-900">Recent Contacts</h3>
+        <a routerLink="/dashboard/contacts" class="text-sm text-blue-600 hover:text-blue-500">
+          View all
+        </a>
+      </div>
+    </ng-template>
+
+    @if (recentContacts().length > 0) {
+    <div class="space-y-3">
+      @for (contact of recentContacts(); track contact.$id) {
+      <div class="flex items-center space-x-3">
+        <p-avatar
+          [label]="getContactInitials(contact.firstName, contact.lastName)"
+          shape="circle"
+          size="normal"
+        >
+        </p-avatar>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            {{ contact.firstName }} {{ contact.lastName }}
+          </p>
+          <p class="text-sm text-gray-500 truncate">{{ contact.email }}</p>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="text-center py-6">
+      <div class="flex flex-col items-center">
+        <i class="pi pi-users text-3xl text-gray-400 mb-2"></i>
+        <p class="text-sm text-gray-500">No contacts yet</p>
+      </div>
+    </div>
+    }
+  </p-card>
+
+  <!-- Upcoming Meetings -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="p-[20px] pb-0 flex items-center justify-between">
+        <h3 class="text-lg font-medium text-gray-900">Upcoming Meetings</h3>
+        <a routerLink="/dashboard/meetings" class="text-sm text-blue-600 hover:text-blue-500">
+          View all
+        </a>
+      </div>
+    </ng-template>
+
+    @if (upcomingMeetingsList().length > 0) {
+    <div class="space-y-3">
+      @for (meeting of upcomingMeetingsList(); track meeting.$id) {
+      <div class="flex items-center space-x-3">
+        <div class="flex-shrink-0">
+          <i class="pi pi-calendar text-lg text-blue-500"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            {{ meeting.title }}
+          </p>
+          <p class="text-sm text-gray-500">
+            {{ meeting.startDateTime | date : 'short' }}
+          </p>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="text-center py-6">
+      <div class="flex flex-col items-center">
+        <i class="pi pi-calendar text-3xl text-gray-400 mb-2"></i>
+        <p class="text-sm text-gray-500">No upcoming meetings</p>
+      </div>
+    </div>
+    }
+  </p-card>
+</div>
