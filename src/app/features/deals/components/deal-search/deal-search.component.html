@@ -1,12 +1,16 @@
 <div class="max-w-md">
-  <span class="p-input-icon-left w-full">
-    <i class="pi pi-search"></i>
+  <p-inputgroup>
     <input 
       pInputText 
-      type="text" 
       placeholder="Search deals..."
       [value]="searchTerm()"
-      (input)="onSearchChange($event)"
-      class="w-full" />
-  </span>
+      (input)="onSearchChange($event)" />
+    <p-inputgroup-addon>
+      <p-button 
+        icon="pi pi-search" 
+        severity="secondary" 
+        variant="text" 
+        (click)="doSearch($event)" />
+    </p-inputgroup-addon>
+  </p-inputgroup>
 </div>
