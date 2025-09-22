@@ -1,14 +1,14 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Contact } from '../../../../core/models';
-
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 // PrimeNG Imports
 import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
 import { TooltipModule } from 'primeng/tooltip';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { MessageModule } from 'primeng/message';
+
+import { Contact } from '../../../../core/models';
 
 @Component({
   selector: 'app-contact-table',
@@ -19,10 +19,10 @@ import { MessageModule } from 'primeng/message';
     AvatarModule,
     TooltipModule,
     ProgressSpinnerModule,
-    MessageModule
+    MessageModule,
   ],
   templateUrl: './contact-table.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactTableComponent {
   contacts = input<Contact[]>([]);

@@ -1,30 +1,27 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-
 // PrimeNG Imports
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { filter, take } from 'rxjs/operators';
 
+import { selectUserTenantId } from '../../../../auth/store/auth.selectors';
+// Models
+import { Meeting } from '../../../../core/models';
+import * as MeetingsActions from '../../store/meetings.actions';
+// Store
+import {
+  selectFilteredMeetings,
+  selectMeetingsError,
+  selectMeetingsLoading,
+  selectMeetingsSearchTerm,
+} from '../../store/meetings.selectors';
+import { MeetingFormComponent } from '../meeting-form/meeting-form.component';
 // Local Components
 import { MeetingSearchComponent } from '../meeting-search/meeting-search.component';
 import { MeetingTableComponent } from '../meeting-table/meeting-table.component';
-import { MeetingFormComponent } from '../meeting-form/meeting-form.component';
-
-// Store
-import { 
-  selectFilteredMeetings, 
-  selectMeetingsLoading, 
-  selectMeetingsError,
-  selectMeetingsSearchTerm
-} from '../../store/meetings.selectors';
-import { selectUserTenantId } from '../../../../auth/store/auth.selectors';
-import { filter, take } from 'rxjs/operators';
-import * as MeetingsActions from '../../store/meetings.actions';
-
-// Models
-import { Meeting } from '../../../../core/models';
 
 @Component({
   selector: 'app-meetings-list',
@@ -34,11 +31,11 @@ import { Meeting } from '../../../../core/models';
     ConfirmDialogModule,
     MeetingSearchComponent,
     MeetingTableComponent,
-    MeetingFormComponent
+    MeetingFormComponent,
   ],
   templateUrl: './meetings-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService]
+  providers: [ConfirmationService],
 })
 export class MeetingsListComponent implements OnInit {
   private store = inject(Store);
@@ -56,12 +53,15 @@ export class MeetingsListComponent implements OnInit {
 
   ngOnInit() {
     // Wait for tenant ID to be available before loading meetings
-    this.store.select(selectUserTenantId).pipe(
-      filter(tenantId => !!tenantId),
-      take(1)
-    ).subscribe(() => {
-      this.store.dispatch(MeetingsActions.loadMeetings());
-    });
+    this.store
+      .select(selectUserTenantId)
+      .pipe(
+        filter((tenantId) => !!tenantId),
+        take(1),
+      )
+      .subscribe(() => {
+        this.store.dispatch(MeetingsActions.loadMeetings());
+      });
   }
 
   onSearchChange(searchTerm: string) {
@@ -86,15 +86,19 @@ export class MeetingsListComponent implements OnInit {
   saveMeeting(meetingData: Partial<Meeting>) {
     if (meetingData.$id) {
       // Update existing meeting
-      this.store.dispatch(MeetingsActions.updateMeeting({ 
-        id: meetingData.$id, 
-        changes: meetingData 
-      }));
+      this.store.dispatch(
+        MeetingsActions.updateMeeting({
+          id: meetingData.$id,
+          changes: meetingData,
+        }),
+      );
     } else {
       // Create new meeting
-      this.store.dispatch(MeetingsActions.createMeeting({ 
-        meeting: meetingData as Omit<Meeting, '$id' | '$createdAt' | '$updatedAt'>
-      }));
+      this.store.dispatch(
+        MeetingsActions.createMeeting({
+          meeting: meetingData as Omit<Meeting, '$id' | '$createdAt' | '$updatedAt'>,
+        }),
+      );
     }
   }
 
@@ -106,7 +110,7 @@ export class MeetingsListComponent implements OnInit {
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.store.dispatch(MeetingsActions.deleteMeeting({ id: meeting.$id }));
-      }
+      },
     });
   }
 }

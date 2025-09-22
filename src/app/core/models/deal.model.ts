@@ -14,7 +14,7 @@ export interface Deal {
 
 export interface DealsState {
   ids: string[];
-  entities: { [id: string]: Deal };
+  entities: Record<string, Deal>;
   loading: boolean;
   error: string | null;
   searchTerm: string;

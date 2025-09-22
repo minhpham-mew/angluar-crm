@@ -1,13 +1,13 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Meeting } from '../../../../core/models';
-
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 // PrimeNG Imports
 import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { MessageModule } from 'primeng/message';
+
+import { Meeting } from '../../../../core/models';
 
 @Component({
   selector: 'app-meeting-table',
@@ -17,10 +17,10 @@ import { MessageModule } from 'primeng/message';
     ButtonModule,
     TooltipModule,
     ProgressSpinnerModule,
-    MessageModule
+    MessageModule,
   ],
   templateUrl: './meeting-table.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingTableComponent {
   meetings = input<Meeting[]>([]);
@@ -36,7 +36,7 @@ export class MeetingTableComponent {
     const end = new Date(endDateTime);
     const durationMs = end.getTime() - start.getTime();
     const durationMinutes = Math.floor(durationMs / (1000 * 60));
-    
+
     if (durationMinutes < 60) {
       return `${durationMinutes}m`;
     } else {

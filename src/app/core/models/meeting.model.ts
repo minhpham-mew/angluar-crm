@@ -14,7 +14,7 @@ export interface Meeting {
 
 export interface MeetingsState {
   ids: string[];
-  entities: { [id: string]: Meeting };
+  entities: Record<string, Meeting>;
   loading: boolean;
   error: string | null;
   searchTerm: string;

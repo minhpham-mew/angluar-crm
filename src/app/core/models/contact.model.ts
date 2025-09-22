@@ -14,7 +14,7 @@ export interface Contact {
 
 export interface ContactsState {
   ids: string[];
-  entities: { [id: string]: Contact };
+  entities: Record<string, Contact>;
   loading: boolean;
   error: string | null;
   searchTerm: string;

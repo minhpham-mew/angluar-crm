@@ -1,17 +1,17 @@
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Contact, Meeting } from '../../../../core/models';
-
+import { AvatarModule } from 'primeng/avatar';
 // PrimeNG Imports
 import { CardModule } from 'primeng/card';
-import { AvatarModule } from 'primeng/avatar';
+
+import { Contact, Meeting } from '../../../../core/models';
 
 @Component({
   selector: 'app-recent-activity',
   imports: [CommonModule, RouterLink, CardModule, AvatarModule],
   templateUrl: './recent-activity.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecentActivityComponent {
   recentContacts = input<Contact[]>([]);

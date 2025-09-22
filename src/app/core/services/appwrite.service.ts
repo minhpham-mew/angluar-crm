@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Client, Account, Databases, Query } from 'appwrite';
+import { Account, Client, Databases, Query } from 'appwrite';
+
 import { environment } from '../../../environments/environment';
 import { Contact, Deal, Meeting, User } from '../models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppwriteService {
   private client: Client;
@@ -15,7 +16,7 @@ export class AppwriteService {
     this.client = new Client()
       .setEndpoint(environment.appwrite.endpoint)
       .setProject(environment.appwrite.projectId);
-    
+
     this.account = new Account(this.client);
     this.databases = new Databases(this.client);
   }
@@ -28,21 +29,21 @@ export class AppwriteService {
   async signup(name: string, email: string, password: string, companyName: string) {
     // Create user account
     const user = await this.account.create('unique()', email, password, name);
-    
+
     // Create session for the new user
     await this.account.createEmailPasswordSession(email, password);
-    
+
     // Generate a unique tenant ID for the company
     const tenantId = `tenant_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     // Set user preferences with company info and tenant ID
     await this.account.updatePrefs({
       tenantId,
       companyName,
       role: 'admin', // First user becomes admin
-      permissions: ['read', 'write', 'delete', 'admin']
+      permissions: ['read', 'write', 'delete', 'admin'],
     });
-    
+
     return user;
   }
 
@@ -75,7 +76,7 @@ export class AppwriteService {
     }
   }
 
-  async deleteSession(sessionId: string = 'current') {
+  async deleteSession(sessionId = 'current') {
     return await this.account.deleteSession(sessionId);
   }
 
@@ -102,17 +103,19 @@ export class AppwriteService {
     const response = await this.databases.listDocuments(
       environment.appwrite.databaseId,
       environment.appwrite.collections.contacts,
-      [Query.equal('tenantId', tenantId)]
+      [Query.equal('tenantId', tenantId)],
     );
     return response.documents as unknown as Contact[];
   }
 
-  async createContact(contact: Omit<Contact, '$id' | '$createdAt' | '$updatedAt'>): Promise<Contact> {
+  async createContact(
+    contact: Omit<Contact, '$id' | '$createdAt' | '$updatedAt'>,
+  ): Promise<Contact> {
     const response = await this.databases.createDocument(
       environment.appwrite.databaseId,
       environment.appwrite.collections.contacts,
       'unique()',
-      contact
+      contact,
     );
     return response as unknown as Contact;
   }
@@ -122,7 +125,7 @@ export class AppwriteService {
       environment.appwrite.databaseId,
       environment.appwrite.collections.contacts,
       id,
-      contact
+      contact,
     );
     return response as unknown as Contact;
   }
@@ -131,7 +134,7 @@ export class AppwriteService {
     await this.databases.deleteDocument(
       environment.appwrite.databaseId,
       environment.appwrite.collections.contacts,
-      id
+      id,
     );
   }
 
@@ -140,7 +143,7 @@ export class AppwriteService {
     const response = await this.databases.listDocuments(
       environment.appwrite.databaseId,
       environment.appwrite.collections.deals,
-      [Query.equal('tenantId', tenantId)]
+      [Query.equal('tenantId', tenantId)],
     );
     return response.documents as unknown as Deal[];
   }
@@ -150,7 +153,7 @@ export class AppwriteService {
       environment.appwrite.databaseId,
       environment.appwrite.collections.deals,
       'unique()',
-      deal
+      deal,
     );
     return response as unknown as Deal;
   }
@@ -160,7 +163,7 @@ export class AppwriteService {
       environment.appwrite.databaseId,
       environment.appwrite.collections.deals,
       id,
-      deal
+      deal,
     );
     return response as unknown as Deal;
   }
@@ -169,7 +172,7 @@ export class AppwriteService {
     await this.databases.deleteDocument(
       environment.appwrite.databaseId,
       environment.appwrite.collections.deals,
-      id
+      id,
     );
   }
 
@@ -178,17 +181,19 @@ export class AppwriteService {
     const response = await this.databases.listDocuments(
       environment.appwrite.databaseId,
       environment.appwrite.collections.meetings,
-      [Query.equal('tenantId', tenantId)]
+      [Query.equal('tenantId', tenantId)],
     );
     return response.documents as unknown as Meeting[];
   }
 
-  async createMeeting(meeting: Omit<Meeting, '$id' | '$createdAt' | '$updatedAt'>): Promise<Meeting> {
+  async createMeeting(
+    meeting: Omit<Meeting, '$id' | '$createdAt' | '$updatedAt'>,
+  ): Promise<Meeting> {
     const response = await this.databases.createDocument(
       environment.appwrite.databaseId,
       environment.appwrite.collections.meetings,
       'unique()',
-      meeting
+      meeting,
     );
     return response as unknown as Meeting;
   }
@@ -198,7 +203,7 @@ export class AppwriteService {
       environment.appwrite.databaseId,
       environment.appwrite.collections.meetings,
       id,
-      meeting
+      meeting,
     );
     return response as unknown as Meeting;
   }
@@ -207,7 +212,7 @@ export class AppwriteService {
     await this.databases.deleteDocument(
       environment.appwrite.databaseId,
       environment.appwrite.collections.meetings,
-      id
+      id,
     );
   }
 }

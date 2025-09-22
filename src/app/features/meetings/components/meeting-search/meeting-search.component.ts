@@ -1,17 +1,16 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// PrimeNG Imports
-import { InputTextModule } from 'primeng/inputtext';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { ButtonModule } from 'primeng/button';
+// PrimeNG Imports
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-meeting-search',
   imports: [CommonModule, InputTextModule, InputGroupModule, InputGroupAddonModule, ButtonModule],
   templateUrl: './meeting-search.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingSearchComponent {
   searchTerm = input<string>('');

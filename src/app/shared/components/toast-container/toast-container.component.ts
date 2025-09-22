@@ -1,13 +1,12 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-
 // PrimeNG Imports
 import { ToastModule } from 'primeng/toast';
 
-import { selectAllNotifications } from '../../store/notifications/notifications.selectors';
 import * as NotificationsActions from '../../store/notifications/notifications.actions';
+import { selectAllNotifications } from '../../store/notifications/notifications.selectors';
 
 @Component({
   selector: 'app-toast-container',

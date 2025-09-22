@@ -1,9 +1,8 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 // PrimeNG Imports
 import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -11,7 +10,7 @@ import { TooltipModule } from 'primeng/tooltip';
   selector: 'app-sessions-list',
   imports: [CommonModule, CardModule, ButtonModule, TagModule, TooltipModule],
   templateUrl: './sessions-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SessionsListComponent {
   allSessions = input<any | null>(null);

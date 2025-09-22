@@ -5,16 +5,16 @@
 } @else if (error()) {
   <p-message severity="error" [text]="error() || ''"></p-message>
 } @else if (contacts().length > 0) {
-  <p-table 
-    [value]="contacts()" 
-    [paginator]="true" 
+  <p-table
+    [value]="contacts()"
+    [paginator]="true"
     [rows]="10"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} contacts"
     [rowsPerPageOptions]="[10, 25, 50]"
     [globalFilterFields]="['firstName', 'lastName', 'email', 'phone', 'company']"
-    styleClass="p-datatable-gridlines">
-    
+    styleClass="p-datatable-gridlines"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Name</th>
@@ -24,15 +24,16 @@
         <th>Actions</th>
       </tr>
     </ng-template>
-    
+
     <ng-template pTemplate="body" let-contact>
       <tr>
         <td>
           <div class="flex items-center space-x-3">
-            <p-avatar 
+            <p-avatar
               [label]="getContactInitials(contact.firstName, contact.lastName)"
               shape="circle"
-              size="normal">
+              size="normal"
+            >
             </p-avatar>
             <div>
               <div class="font-medium text-gray-900">
@@ -49,27 +50,29 @@
         <td>{{ contact.company || '-' }}</td>
         <td>
           <div class="flex space-x-2">
-            <p-button 
-              icon="pi pi-pencil" 
+            <p-button
+              icon="pi pi-pencil"
               severity="secondary"
               [text]="true"
               size="small"
               (onClick)="editContact.emit(contact)"
-              pTooltip="Edit contact">
+              pTooltip="Edit contact"
+            >
             </p-button>
-            <p-button 
-              icon="pi pi-trash" 
+            <p-button
+              icon="pi pi-trash"
               severity="danger"
               [text]="true"
               size="small"
               (onClick)="deleteContact.emit(contact)"
-              pTooltip="Delete contact">
+              pTooltip="Delete contact"
+            >
             </p-button>
           </div>
         </td>
       </tr>
     </ng-template>
-    
+
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="5" class="text-center py-8">
@@ -88,11 +91,7 @@
       <i class="pi pi-users text-6xl mb-4"></i>
       <h3 class="text-xl font-medium text-gray-900 mb-2">No contacts yet</h3>
       <p class="text-gray-600 mb-4">Get started by adding your first contact.</p>
-      <p-button 
-        label="Add Contact" 
-        icon="pi pi-plus" 
-        (onClick)="addContact.emit()">
-      </p-button>
+      <p-button label="Add Contact" icon="pi pi-plus" (onClick)="addContact.emit()"> </p-button>
     </div>
   </div>
 }

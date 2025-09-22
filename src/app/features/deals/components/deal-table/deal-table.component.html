@@ -5,16 +5,16 @@
 } @else if (error()) {
   <p-message severity="error" [text]="error() || ''"></p-message>
 } @else if (deals().length > 0) {
-  <p-table 
-    [value]="deals()" 
-    [paginator]="true" 
+  <p-table
+    [value]="deals()"
+    [paginator]="true"
     [rows]="10"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} deals"
     [rowsPerPageOptions]="[10, 25, 50]"
     [globalFilterFields]="['title', 'description', 'stage']"
-    styleClass="p-datatable-gridlines">
-    
+    styleClass="p-datatable-gridlines"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Deal</th>
@@ -24,7 +24,7 @@
         <th>Actions</th>
       </tr>
     </ng-template>
-    
+
     <ng-template pTemplate="body" let-deal>
       <tr>
         <td>
@@ -36,44 +36,44 @@
           </div>
         </td>
         <td>
-          <span class="font-medium">${{ deal.value | number:'1.2-2' }}</span>
+          <span class="font-medium">${{ deal.value | number: '1.2-2' }}</span>
         </td>
         <td>
-          <p-tag 
-            [value]="getStageLabel(deal.stage)"
-            [severity]="getStageSeverity(deal.stage)">
+          <p-tag [value]="getStageLabel(deal.stage)" [severity]="getStageSeverity(deal.stage)">
           </p-tag>
         </td>
         <td>
           @if (deal.expectedCloseDate) {
-            {{ deal.expectedCloseDate | date:'mediumDate' }}
+            {{ deal.expectedCloseDate | date: 'mediumDate' }}
           } @else {
             <span class="text-gray-400">-</span>
           }
         </td>
         <td>
           <div class="flex space-x-2">
-            <p-button 
-              icon="pi pi-pencil" 
+            <p-button
+              icon="pi pi-pencil"
               severity="secondary"
               [text]="true"
               size="small"
               (onClick)="editDeal.emit(deal)"
-              pTooltip="Edit deal">
+              pTooltip="Edit deal"
+            >
             </p-button>
-            <p-button 
-              icon="pi pi-trash" 
+            <p-button
+              icon="pi pi-trash"
               severity="danger"
               [text]="true"
               size="small"
               (onClick)="deleteDeal.emit(deal)"
-              pTooltip="Delete deal">
+              pTooltip="Delete deal"
+            >
             </p-button>
           </div>
         </td>
       </tr>
     </ng-template>
-    
+
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="5" class="text-center py-8">
@@ -92,11 +92,7 @@
       <i class="pi pi-briefcase text-6xl mb-4"></i>
       <h3 class="text-xl font-medium text-gray-900 mb-2">No deals yet</h3>
       <p class="text-gray-600 mb-4">Get started by creating your first deal.</p>
-      <p-button 
-        label="Add Deal" 
-        icon="pi pi-plus" 
-        (onClick)="addDeal.emit()">
-      </p-button>
+      <p-button label="Add Deal" icon="pi pi-plus" (onClick)="addDeal.emit()"> </p-button>
     </div>
   </div>
 }

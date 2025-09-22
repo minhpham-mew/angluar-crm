@@ -1,33 +1,32 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
+import { Store } from '@ngrx/store';
 // PrimeNG Imports
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
 
-import { selectAuthLoading, selectAuthError } from '../store/auth.selectors';
 import * as AuthActions from '../store/auth.actions';
+import { selectAuthError, selectAuthLoading } from '../store/auth.selectors';
 
 @Component({
   selector: 'app-login',
   imports: [
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,
     RouterLink,
     ButtonModule,
     InputTextModule,
     PasswordModule,
     MessageModule,
-    CardModule
+    CardModule,
   ],
   templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);

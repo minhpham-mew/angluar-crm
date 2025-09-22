@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { DealsEntityState, dealsAdapter } from './deals.reducer';
+
+import { dealsAdapter, DealsEntityState } from './deals.reducer';
 
 export const selectDealsState = createFeatureSelector<DealsEntityState>('deals');
 
@@ -10,20 +11,11 @@ export const selectDealEntities = createSelector(selectDealsState, selectEntitie
 export const selectAllDeals = createSelector(selectDealsState, selectAll);
 export const selectDealsTotal = createSelector(selectDealsState, selectTotal);
 
-export const selectDealsLoading = createSelector(
-  selectDealsState,
-  (state) => state.loading
-);
+export const selectDealsLoading = createSelector(selectDealsState, (state) => state.loading);
 
-export const selectDealsError = createSelector(
-  selectDealsState,
-  (state) => state.error
-);
+export const selectDealsError = createSelector(selectDealsState, (state) => state.error);
 
-export const selectDealsSearchTerm = createSelector(
-  selectDealsState,
-  (state) => state.searchTerm
-);
+export const selectDealsSearchTerm = createSelector(selectDealsState, (state) => state.searchTerm);
 
 export const selectFilteredDeals = createSelector(
   selectAllDeals,
@@ -33,35 +25,34 @@ export const selectFilteredDeals = createSelector(
       return deals;
     }
     const term = searchTerm.toLowerCase();
-    return deals.filter(deal =>
-      deal.title.toLowerCase().includes(term) ||
-      (deal.description && deal.description.toLowerCase().includes(term)) ||
-      deal.stage.toLowerCase().includes(term)
+    return deals.filter(
+      (deal) =>
+        deal.title.toLowerCase().includes(term) ||
+        (deal.description && deal.description.toLowerCase().includes(term)) ||
+        deal.stage.toLowerCase().includes(term),
     );
-  }
+  },
 );
 
-export const selectDealById = (id: string) => createSelector(
-  selectDealEntities,
-  (entities) => entities[id]
+export const selectDealById = (id: string) =>
+  createSelector(selectDealEntities, (entities) => entities[id]);
+
+export const selectDealsByStage = (stage: string) =>
+  createSelector(selectAllDeals, (deals) => deals.filter((deal) => deal.stage === stage));
+
+export const selectDealsPipelineValue = createSelector(selectAllDeals, (deals) =>
+  deals
+    .filter((deal) => deal.stage !== 'closed_lost')
+    .reduce((total, deal) => total + deal.value, 0),
 );
 
-export const selectDealsByStage = (stage: string) => createSelector(
-  selectAllDeals,
-  (deals) => deals.filter(deal => deal.stage === stage)
-);
-
-export const selectDealsPipelineValue = createSelector(
-  selectAllDeals,
-  (deals) => deals
-    .filter(deal => deal.stage !== 'closed_lost')
-    .reduce((total, deal) => total + deal.value, 0)
-);
-
-export const selectUpcomingDeals = createSelector(
-  selectAllDeals,
-  (deals) => deals
-    .filter(deal => deal.expectedCloseDate && new Date(deal.expectedCloseDate) > new Date())
-    .sort((a, b) => new Date(a.expectedCloseDate || '').getTime() - new Date(b.expectedCloseDate || '').getTime())
-    .slice(0, 5)
+export const selectUpcomingDeals = createSelector(selectAllDeals, (deals) =>
+  deals
+    .filter((deal) => deal.expectedCloseDate && new Date(deal.expectedCloseDate) > new Date())
+    .sort(
+      (a, b) =>
+        new Date(a.expectedCloseDate || '').getTime() -
+        new Date(b.expectedCloseDate || '').getTime(),
+    )
+    .slice(0, 5),
 );

@@ -1,24 +1,18 @@
-import { Component, input, output, effect, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Meeting } from '../../../../core/models';
-
+import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 // PrimeNG Imports
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
+
+import { Meeting } from '../../../../core/models';
 
 @Component({
   selector: 'app-meeting-form',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    DialogModule,
-    InputTextModule,
-    ButtonModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule, InputTextModule, ButtonModule],
   templateUrl: './meeting-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingFormComponent {
   private fb = inject(FormBuilder);
@@ -34,7 +28,7 @@ export class MeetingFormComponent {
     description: [''],
     startDateTime: ['', [Validators.required]],
     endDateTime: ['', [Validators.required]],
-    location: ['']
+    location: [''],
   });
 
   constructor() {
@@ -47,7 +41,7 @@ export class MeetingFormComponent {
           description: meeting.description || '',
           startDateTime: this.formatDateTimeForInput(meeting.startDateTime),
           endDateTime: this.formatDateTimeForInput(meeting.endDateTime),
-          location: meeting.location || ''
+          location: meeting.location || '',
         });
       } else {
         this.meetingForm.reset();
@@ -77,9 +71,9 @@ export class MeetingFormComponent {
         startDateTime: new Date(formValue.startDateTime).toISOString(),
         endDateTime: new Date(formValue.endDateTime).toISOString(),
         // Include ID if editing existing meeting
-        ...(this.selectedMeeting() && { $id: this.selectedMeeting()!.$id })
+        ...(this.selectedMeeting() && { $id: this.selectedMeeting()!.$id }),
       };
-      
+
       this.meetingSave.emit(meetingData);
       this.onDialogHide();
     }

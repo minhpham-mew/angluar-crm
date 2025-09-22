@@ -1,24 +1,18 @@
-import { Component, input, output, effect, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Contact } from '../../../../core/models';
-
+import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 // PrimeNG Imports
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
+
+import { Contact } from '../../../../core/models';
 
 @Component({
   selector: 'app-contact-form',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    DialogModule,
-    InputTextModule,
-    ButtonModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule, InputTextModule, ButtonModule],
   templateUrl: './contact-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactFormComponent {
   private fb = inject(FormBuilder);
@@ -36,7 +30,7 @@ export class ContactFormComponent {
     phone: [''],
     company: [''],
     position: [''],
-    notes: ['']
+    notes: [''],
   });
 
   constructor() {
@@ -51,7 +45,7 @@ export class ContactFormComponent {
           phone: contact.phone || '',
           company: contact.company || '',
           position: contact.position || '',
-          notes: contact.notes || ''
+          notes: contact.notes || '',
         });
       } else {
         this.contactForm.reset();
@@ -74,9 +68,9 @@ export class ContactFormComponent {
       const contactData: Partial<Contact> = {
         ...formValue,
         // Include ID if editing existing contact
-        ...(this.selectedContact() && { $id: this.selectedContact()!.$id })
+        ...(this.selectedContact() && { $id: this.selectedContact()!.$id }),
       };
-      
+
       this.contactSave.emit(contactData);
       this.onDialogHide();
     }

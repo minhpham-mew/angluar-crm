@@ -1,32 +1,29 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-
 // PrimeNG Imports
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { filter, take } from 'rxjs/operators';
 
+import { selectUserTenantId } from '../../../../auth/store/auth.selectors';
+// Models
+import { Deal } from '../../../../core/models';
+import * as NotificationsActions from '../../../../shared/store/notifications/notifications.actions';
+import * as DealsActions from '../../store/deals.actions';
+// Store
+import {
+  selectDealsError,
+  selectDealsLoading,
+  selectDealsPipelineValue,
+  selectDealsSearchTerm,
+  selectFilteredDeals,
+} from '../../store/deals.selectors';
+import { DealFormComponent } from '../deal-form/deal-form.component';
 // Local Components
 import { DealSearchComponent } from '../deal-search/deal-search.component';
 import { DealTableComponent } from '../deal-table/deal-table.component';
-import { DealFormComponent } from '../deal-form/deal-form.component';
-
-// Store
-import { 
-  selectFilteredDeals, 
-  selectDealsLoading, 
-  selectDealsError,
-  selectDealsSearchTerm,
-  selectDealsPipelineValue
-} from '../../store/deals.selectors';
-import { selectUserTenantId } from '../../../../auth/store/auth.selectors';
-import { filter, take } from 'rxjs/operators';
-import * as DealsActions from '../../store/deals.actions';
-import * as NotificationsActions from '../../../../shared/store/notifications/notifications.actions';
-
-// Models
-import { Deal } from '../../../../core/models';
 
 @Component({
   selector: 'app-deals-list',
@@ -36,11 +33,11 @@ import { Deal } from '../../../../core/models';
     ConfirmDialogModule,
     DealSearchComponent,
     DealTableComponent,
-    DealFormComponent
+    DealFormComponent,
   ],
   templateUrl: './deals-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService]
+  providers: [ConfirmationService],
 })
 export class DealsListComponent implements OnInit {
   private store = inject(Store);
@@ -59,12 +56,15 @@ export class DealsListComponent implements OnInit {
 
   ngOnInit() {
     // Wait for tenant ID to be available before loading deals
-    this.store.select(selectUserTenantId).pipe(
-      filter(tenantId => !!tenantId),
-      take(1)
-    ).subscribe(() => {
-      this.store.dispatch(DealsActions.loadDeals());
-    });
+    this.store
+      .select(selectUserTenantId)
+      .pipe(
+        filter((tenantId) => !!tenantId),
+        take(1),
+      )
+      .subscribe(() => {
+        this.store.dispatch(DealsActions.loadDeals());
+      });
   }
 
   onSearchChange(searchTerm: string) {
@@ -89,15 +89,19 @@ export class DealsListComponent implements OnInit {
   saveDeal(dealData: Partial<Deal>) {
     if (dealData.$id) {
       // Update existing deal
-      this.store.dispatch(DealsActions.updateDeal({ 
-        id: dealData.$id, 
-        changes: dealData 
-      }));
+      this.store.dispatch(
+        DealsActions.updateDeal({
+          id: dealData.$id,
+          changes: dealData,
+        }),
+      );
     } else {
       // Create new deal
-      this.store.dispatch(DealsActions.createDeal({ 
-        deal: dealData as Omit<Deal, '$id' | '$createdAt' | '$updatedAt'>
-      }));
+      this.store.dispatch(
+        DealsActions.createDeal({
+          deal: dealData as Omit<Deal, '$id' | '$createdAt' | '$updatedAt'>,
+        }),
+      );
     }
   }
 
@@ -109,7 +113,7 @@ export class DealsListComponent implements OnInit {
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.store.dispatch(DealsActions.deleteDeal({ id: deal.$id }));
-      }
+      },
     });
   }
 }

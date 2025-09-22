@@ -1,13 +1,14 @@
-import { Injectable, inject, OnDestroy } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { interval, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
-import { AppwriteService } from './appwrite.service';
-import { selectIsAuthenticated } from '../../auth/store/auth.selectors';
+
 import * as AuthActions from '../../auth/store/auth.actions';
+import { selectIsAuthenticated } from '../../auth/store/auth.selectors';
+import { AppwriteService } from './appwrite.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SessionService implements OnDestroy {
   private store = inject(Store);
@@ -25,12 +26,15 @@ export class SessionService implements OnDestroy {
 
   private startSessionMonitoring() {
     // Only monitor session if user is authenticated
-    this.sessionCheckInterval = this.store.select(selectIsAuthenticated).pipe(
-      filter(isAuthenticated => isAuthenticated),
-      switchMap(() => interval(this.SESSION_CHECK_INTERVAL))
-    ).subscribe(() => {
-      this.checkSessionValidity();
-    });
+    this.sessionCheckInterval = this.store
+      .select(selectIsAuthenticated)
+      .pipe(
+        filter((isAuthenticated) => isAuthenticated),
+        switchMap(() => interval(this.SESSION_CHECK_INTERVAL)),
+      )
+      .subscribe(() => {
+        this.checkSessionValidity();
+      });
   }
 
   private stopSessionMonitoring() {

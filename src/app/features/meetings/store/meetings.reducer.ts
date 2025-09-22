@@ -1,5 +1,6 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
+
 import { Meeting } from '../../../core/models';
 import * as MeetingsActions from './meetings.actions';
 
@@ -16,7 +17,7 @@ export const meetingsAdapter: EntityAdapter<Meeting> = createEntityAdapter<Meeti
 export const initialState: MeetingsEntityState = meetingsAdapter.getInitialState({
   loading: false,
   error: null,
-  searchTerm: ''
+  searchTerm: '',
 });
 
 export const meetingsReducer = createReducer(
@@ -25,43 +26,43 @@ export const meetingsReducer = createReducer(
   on(MeetingsActions.loadMeetings, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(MeetingsActions.loadMeetingsSuccess, (state, { meetings }) =>
     meetingsAdapter.setAll(meetings, {
       ...state,
       loading: false,
-      error: null
-    })
+      error: null,
+    }),
   ),
   on(MeetingsActions.loadMeetingsFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Create meeting
   on(MeetingsActions.createMeeting, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(MeetingsActions.createMeetingSuccess, (state, { meeting }) =>
     meetingsAdapter.addOne(meeting, {
       ...state,
       loading: false,
-      error: null
-    })
+      error: null,
+    }),
   ),
   on(MeetingsActions.createMeetingFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Update meeting
   on(MeetingsActions.updateMeeting, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(MeetingsActions.updateMeetingSuccess, (state, { meeting }) =>
     meetingsAdapter.updateOne(
@@ -69,36 +70,36 @@ export const meetingsReducer = createReducer(
       {
         ...state,
         loading: false,
-        error: null
-      }
-    )
+        error: null,
+      },
+    ),
   ),
   on(MeetingsActions.updateMeetingFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Delete meeting
   on(MeetingsActions.deleteMeeting, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(MeetingsActions.deleteMeetingSuccess, (state, { id }) =>
     meetingsAdapter.removeOne(id, {
       ...state,
       loading: false,
-      error: null
-    })
+      error: null,
+    }),
   ),
   on(MeetingsActions.deleteMeetingFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Search
   on(MeetingsActions.setMeetingsSearchTerm, (state, { searchTerm }) => ({
     ...state,
-    searchTerm
-  }))
+    searchTerm,
+  })),
 );

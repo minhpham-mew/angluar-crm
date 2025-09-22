@@ -1,13 +1,13 @@
-import { Component, input, output, effect, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Deal } from '../../../../core/models';
-
+import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 // PrimeNG Imports
 import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+
+import { Deal } from '../../../../core/models';
 
 @Component({
   selector: 'app-deal-form',
@@ -17,10 +17,10 @@ import { ButtonModule } from 'primeng/button';
     DialogModule,
     InputTextModule,
     InputNumberModule,
-    ButtonModule
+    ButtonModule,
   ],
   templateUrl: './deal-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DealFormComponent {
   private fb = inject(FormBuilder);
@@ -36,7 +36,7 @@ export class DealFormComponent {
     description: [''],
     value: [0, [Validators.required, Validators.min(0)]],
     stage: ['lead', [Validators.required]],
-    expectedCloseDate: ['']
+    expectedCloseDate: [''],
   });
 
   constructor() {
@@ -49,7 +49,9 @@ export class DealFormComponent {
           description: deal.description || '',
           value: deal.value,
           stage: deal.stage,
-          expectedCloseDate: deal.expectedCloseDate ? new Date(deal.expectedCloseDate).toISOString().split('T')[0] : ''
+          expectedCloseDate: deal.expectedCloseDate
+            ? new Date(deal.expectedCloseDate).toISOString().split('T')[0]
+            : '',
         });
       } else {
         this.dealForm.reset({
@@ -57,7 +59,7 @@ export class DealFormComponent {
           description: '',
           value: 0,
           stage: 'lead',
-          expectedCloseDate: ''
+          expectedCloseDate: '',
         });
       }
     });
@@ -70,7 +72,7 @@ export class DealFormComponent {
       description: '',
       value: 0,
       stage: 'lead',
-      expectedCloseDate: ''
+      expectedCloseDate: '',
     });
   }
 
@@ -83,11 +85,13 @@ export class DealFormComponent {
       const formValue = this.dealForm.value;
       const dealData: Partial<Deal> = {
         ...formValue,
-        expectedCloseDate: formValue.expectedCloseDate ? new Date(formValue.expectedCloseDate).toISOString() : null,
+        expectedCloseDate: formValue.expectedCloseDate
+          ? new Date(formValue.expectedCloseDate).toISOString()
+          : null,
         // Include ID if editing existing deal
-        ...(this.selectedDeal() && { $id: this.selectedDeal()!.$id })
+        ...(this.selectedDeal() && { $id: this.selectedDeal()!.$id }),
       };
-      
+
       this.dealSave.emit(dealData);
       this.onDialogHide();
     }

@@ -1,29 +1,29 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { providePrimeNG } from 'primeng/config';
+import { provideRouter } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import Aura from '@primeuix/themes/aura';
-import { environment } from '../environments/environment';
-import { sessionInterceptor } from './core/interceptors/session.interceptor';
+import { providePrimeNG } from 'primeng/config';
 
+import { environment } from '../environments/environment';
 import { routes } from './app.routes';
-import { authReducer } from './auth/store/auth.reducer';
-import { notificationsReducer } from './shared/store/notifications/notifications.reducer';
-import { contactsReducer } from './features/contacts/store/contacts.reducer';
-import { dealsReducer } from './features/deals/store/deals.reducer';
-import { meetingsReducer } from './features/meetings/store/meetings.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { authReducer } from './auth/store/auth.reducer';
+import { sessionInterceptor } from './core/interceptors/session.interceptor';
 import { ContactsEffects } from './features/contacts/store/contacts.effects';
+import { contactsReducer } from './features/contacts/store/contacts.reducer';
 import { DealsEffects } from './features/deals/store/deals.effects';
+import { dealsReducer } from './features/deals/store/deals.reducer';
 import { MeetingsEffects } from './features/meetings/store/meetings.effects';
+import { meetingsReducer } from './features/meetings/store/meetings.reducer';
+import { notificationsReducer } from './shared/store/notifications/notifications.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [

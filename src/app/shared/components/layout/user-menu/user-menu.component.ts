@@ -1,17 +1,17 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../../core/models';
-
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 // PrimeNG Imports
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 
+import { User } from '../../../../core/models';
+
 @Component({
   selector: 'app-user-menu',
   imports: [CommonModule, AvatarModule, ButtonModule, TooltipModule],
   templateUrl: './user-menu.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent {
   user = input<User | null>(null);
@@ -19,6 +19,10 @@ export class UserMenuComponent {
   showSessionManager = output<void>();
 
   getUserInitials(name: string): string {
-    return name.split(' ').map(n => n.charAt(0)).join('').toUpperCase();
+    return name
+      .split(' ')
+      .map((n) => n.charAt(0))
+      .join('')
+      .toUpperCase();
   }
 }

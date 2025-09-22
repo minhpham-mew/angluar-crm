@@ -1,31 +1,28 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-
 // PrimeNG Imports
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { filter, take } from 'rxjs/operators';
 
+import { selectUserTenantId } from '../../../../auth/store/auth.selectors';
+// Models
+import { Contact } from '../../../../core/models';
+import * as NotificationsActions from '../../../../shared/store/notifications/notifications.actions';
+import * as ContactsActions from '../../store/contacts.actions';
+// Store
+import {
+  selectContactsError,
+  selectContactsLoading,
+  selectContactsSearchTerm,
+  selectFilteredContacts,
+} from '../../store/contacts.selectors';
+import { ContactFormComponent } from '../contact-form/contact-form.component';
 // Local Components
 import { ContactSearchComponent } from '../contact-search/contact-search.component';
 import { ContactTableComponent } from '../contact-table/contact-table.component';
-import { ContactFormComponent } from '../contact-form/contact-form.component';
-
-// Store
-import { 
-  selectFilteredContacts, 
-  selectContactsLoading, 
-  selectContactsError,
-  selectContactsSearchTerm
-} from '../../store/contacts.selectors';
-import { selectUserTenantId } from '../../../../auth/store/auth.selectors';
-import { filter, take } from 'rxjs/operators';
-import * as ContactsActions from '../../store/contacts.actions';
-import * as NotificationsActions from '../../../../shared/store/notifications/notifications.actions';
-
-// Models
-import { Contact } from '../../../../core/models';
 
 @Component({
   selector: 'app-contacts-list',
@@ -35,11 +32,11 @@ import { Contact } from '../../../../core/models';
     ConfirmDialogModule,
     ContactSearchComponent,
     ContactTableComponent,
-    ContactFormComponent
+    ContactFormComponent,
   ],
   templateUrl: './contacts-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService]
+  providers: [ConfirmationService],
 })
 export class ContactsListComponent implements OnInit {
   private store = inject(Store);
@@ -57,12 +54,15 @@ export class ContactsListComponent implements OnInit {
 
   ngOnInit() {
     // Wait for tenant ID to be available before loading contacts
-    this.store.select(selectUserTenantId).pipe(
-      filter(tenantId => !!tenantId),
-      take(1)
-    ).subscribe(() => {
-      this.store.dispatch(ContactsActions.loadContacts());
-    });
+    this.store
+      .select(selectUserTenantId)
+      .pipe(
+        filter((tenantId) => !!tenantId),
+        take(1),
+      )
+      .subscribe(() => {
+        this.store.dispatch(ContactsActions.loadContacts());
+      });
   }
 
   onSearchChange(searchTerm: string) {
@@ -87,15 +87,19 @@ export class ContactsListComponent implements OnInit {
   saveContact(contactData: Partial<Contact>) {
     if (contactData.$id) {
       // Update existing contact
-      this.store.dispatch(ContactsActions.updateContact({ 
-        id: contactData.$id, 
-        changes: contactData 
-      }));
+      this.store.dispatch(
+        ContactsActions.updateContact({
+          id: contactData.$id,
+          changes: contactData,
+        }),
+      );
     } else {
       // Create new contact
-      this.store.dispatch(ContactsActions.createContact({ 
-        contact: contactData as Omit<Contact, '$id' | '$createdAt' | '$updatedAt'>
-      }));
+      this.store.dispatch(
+        ContactsActions.createContact({
+          contact: contactData as Omit<Contact, '$id' | '$createdAt' | '$updatedAt'>,
+        }),
+      );
     }
   }
 
@@ -107,7 +111,7 @@ export class ContactsListComponent implements OnInit {
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.store.dispatch(ContactsActions.deleteContact({ id: contact.$id }));
-      }
+      },
     });
   }
 }

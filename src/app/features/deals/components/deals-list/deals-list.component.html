@@ -13,17 +13,17 @@
 
   <!-- Pipeline Value Summary -->
   @if (pipelineValue$ | async; as pipelineValue) {
-  <div class="bg-white p-6 rounded-lg shadow">
-    <div class="flex items-center">
-      <div class="flex-shrink-0">
-        <i class="pi pi-dollar text-2xl text-green-500"></i>
-      </div>
-      <div class="ml-4">
-        <h3 class="text-lg font-medium text-gray-900">Total Pipeline Value</h3>
-        <p class="text-3xl font-bold text-green-600">${{ pipelineValue | number : '1.2-2' }}</p>
+    <div class="bg-white p-6 rounded-lg shadow">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <i class="pi pi-dollar text-2xl text-green-500"></i>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">Total Pipeline Value</h3>
+          <p class="text-3xl font-bold text-green-600">${{ pipelineValue | number: '1.2-2' }}</p>
+        </div>
       </div>
     </div>
-  </div>
   }
 
   <!-- Search -->

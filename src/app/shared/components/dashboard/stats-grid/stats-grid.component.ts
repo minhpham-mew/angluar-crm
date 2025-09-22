@@ -1,6 +1,5 @@
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 // PrimeNG Imports
 import { CardModule } from 'primeng/card';
 
@@ -8,7 +7,7 @@ import { CardModule } from 'primeng/card';
   selector: 'app-stats-grid',
   imports: [CommonModule, CardModule],
   templateUrl: './stats-grid.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsGridComponent {
   totalContacts = input<number>(0);

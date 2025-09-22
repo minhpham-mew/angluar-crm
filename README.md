@@ -96,6 +96,7 @@ npm run env:generate
 Create the following collections with these attributes:
 
 #### Contacts Collection
+
 ```json
 {
   "name": "contacts",
@@ -113,6 +114,7 @@ Create the following collections with these attributes:
 ```
 
 #### Deals Collection
+
 ```json
 {
   "name": "deals",
@@ -131,6 +133,7 @@ Create the following collections with these attributes:
 ```
 
 #### Meetings Collection
+
 ```json
 {
   "name": "meetings",
@@ -159,7 +162,7 @@ For each collection, set the following permissions:
 3. **Update**: Any authenticated user
 4. **Delete**: Any authenticated user
 
-*Note: Adjust permissions based on your security requirements*
+_Note: Adjust permissions based on your security requirements_
 
 ### Step 6: Enable Authentication
 
@@ -218,7 +221,9 @@ src/
 ## 🌟 Key Features Explained
 
 ### State Management
+
 The application uses NgRx for state management with separate stores for:
+
 - Authentication state
 - Contacts management
 - Deals tracking
@@ -226,11 +231,13 @@ The application uses NgRx for state management with separate stores for:
 - Notifications
 
 ### Component Architecture
+
 - **Standalone Components**: All components use the new standalone API
 - **Signal-based**: Uses Angular signals for reactive state management
 - **OnPush Strategy**: Optimized change detection for better performance
 
 ### Styling
+
 - **PrimeNG**: Professional UI component library
 - **Aura Theme**: Modern design system
 - **TailwindCSS**: Utility-first CSS framework

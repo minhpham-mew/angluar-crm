@@ -5,12 +5,14 @@
       <span class="font-medium">Current Session</span>
     </div>
   </ng-template>
-  
+
   @if (currentSession()) {
     <div class="space-y-2">
       <div class="flex justify-between">
         <span class="text-sm text-gray-600">Device:</span>
-        <span class="text-sm font-medium">{{ currentSession()!.clientName || 'Unknown Device' }}</span>
+        <span class="text-sm font-medium">{{
+          currentSession()!.clientName || 'Unknown Device'
+        }}</span>
       </div>
       <div class="flex justify-between">
         <span class="text-sm text-gray-600">IP Address:</span>
@@ -18,21 +20,22 @@
       </div>
       <div class="flex justify-between">
         <span class="text-sm text-gray-600">Created:</span>
-        <span class="text-sm font-medium">{{ currentSession()!.$createdAt | date:'medium' }}</span>
+        <span class="text-sm font-medium">{{ currentSession()!.$createdAt | date: 'medium' }}</span>
       </div>
       <div class="flex justify-between">
         <span class="text-sm text-gray-600">Expires:</span>
-        <span class="text-sm font-medium">{{ currentSession()!.expire | date:'medium' }}</span>
+        <span class="text-sm font-medium">{{ currentSession()!.expire | date: 'medium' }}</span>
       </div>
     </div>
-    
+
     <ng-template pTemplate="footer">
-      <p-button 
-        label="Refresh Session" 
-        icon="pi pi-refresh" 
+      <p-button
+        label="Refresh Session"
+        icon="pi pi-refresh"
         severity="secondary"
         size="small"
-        (onClick)="refreshSession.emit()">
+        (onClick)="refreshSession.emit()"
+      >
       </p-button>
     </ng-template>
   } @else {

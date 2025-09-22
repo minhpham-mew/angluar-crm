@@ -1,5 +1,6 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
+
 import { Deal } from '../../../core/models';
 import * as DealsActions from './deals.actions';
 
@@ -16,7 +17,7 @@ export const dealsAdapter: EntityAdapter<Deal> = createEntityAdapter<Deal>({
 export const initialState: DealsEntityState = dealsAdapter.getInitialState({
   loading: false,
   error: null,
-  searchTerm: ''
+  searchTerm: '',
 });
 
 export const dealsReducer = createReducer(
@@ -25,43 +26,43 @@ export const dealsReducer = createReducer(
   on(DealsActions.loadDeals, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(DealsActions.loadDealsSuccess, (state, { deals }) =>
     dealsAdapter.setAll(deals, {
       ...state,
       loading: false,
-      error: null
-    })
+      error: null,
+    }),
   ),
   on(DealsActions.loadDealsFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Create deal
   on(DealsActions.createDeal, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(DealsActions.createDealSuccess, (state, { deal }) =>
     dealsAdapter.addOne(deal, {
       ...state,
       loading: false,
-      error: null
-    })
+      error: null,
+    }),
   ),
   on(DealsActions.createDealFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Update deal
   on(DealsActions.updateDeal, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(DealsActions.updateDealSuccess, (state, { deal }) =>
     dealsAdapter.updateOne(
@@ -69,36 +70,36 @@ export const dealsReducer = createReducer(
       {
         ...state,
         loading: false,
-        error: null
-      }
-    )
+        error: null,
+      },
+    ),
   ),
   on(DealsActions.updateDealFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Delete deal
   on(DealsActions.deleteDeal, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
   on(DealsActions.deleteDealSuccess, (state, { id }) =>
     dealsAdapter.removeOne(id, {
       ...state,
       loading: false,
-      error: null
-    })
+      error: null,
+    }),
   ),
   on(DealsActions.deleteDealFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
   // Search
   on(DealsActions.setDealsSearchTerm, (state, { searchTerm }) => ({
     ...state,
-    searchTerm
-  }))
+    searchTerm,
+  })),
 );

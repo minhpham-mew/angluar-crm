@@ -3,7 +3,8 @@
   <app-navbar
     [user]="user$ | async"
     (logout)="logout()"
-    (showSessionManager)="showSessionManager()">
+    (showSessionManager)="showSessionManager()"
+  >
   </app-navbar>
 
   <!-- Main Content -->
@@ -21,6 +22,7 @@
     (dialogHide)="hideSessionManager()"
     (refreshSession)="refreshSession()"
     (deleteSession)="deleteSession($event)"
-    (deleteAllOtherSessions)="deleteAllOtherSessions()">
+    (deleteAllOtherSessions)="deleteAllOtherSessions()"
+  >
   </app-session-manager-dialog>
 </div>
