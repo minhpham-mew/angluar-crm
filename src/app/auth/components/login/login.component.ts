@@ -10,8 +10,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 
-import * as AuthActions from '../store/auth.actions';
-import { selectAuthError, selectAuthLoading } from '../store/auth.selectors';
+import * as AuthActions from '../../store/auth.actions';
+import { selectAuthError, selectAuthLoading } from '../../store/auth.selectors';
 
 @Component({
   selector: 'app-login',
