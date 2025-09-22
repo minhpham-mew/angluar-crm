@@ -13,6 +13,12 @@ A modern Customer Relationship Management (CRM) application built with Angular 2
 - **State Management**: Powered by NgRx for predictable state management
 - **Real-time Search**: Advanced search functionality across all modules
 
+## 📸 Screenshots
+
+![Dashboard Overview](images/dashboard.png)
+
+*Dashboard showing key metrics, recent contacts, and upcoming meetings*
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: Angular 20, TypeScript, PrimeNG, TailwindCSS
